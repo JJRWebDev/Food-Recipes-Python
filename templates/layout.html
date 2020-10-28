@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Food Recipes</title>
+		<meta name="description" content="Blueprint: Responsive Full Width Tabs" />
+		<meta name="keywords" content="responsive tabs, full width tabs, template, blueprint" />
+		<meta name="author" content="Juan J. Ruiz." />
+        <!--<link rel="shortcut icon" href="../favicon.ico">-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/component.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <script src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>
+		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/tail.select-default.css') }}">
+	</head>
+	<body class="UI_NIGHT">
+		<div class="containerrecipe">
+			<header class="clearfix">
+				
+			</header>
+			<nav class="navbar navbar-expand-lg navbar-light bg-dark UI_NAV_CUSTOM">
+				<a class="navbar-brand" href="/">Food Recipes</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				  <span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				  <div class="navbar-nav">
+					<a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-item nav-link" href="/recipes">Recipes</a>
+					<a class="nav-item nav-link" href="/new">New</a>
+					<a class="nav-item nav-link disabled" href="#">Disabled</a>
+					<span class="nav-item nav-link UI_DAY_NIGHT text-right my-2 my-lg-0">
+						<label for="customRange3">Day</label>/<label for="customRange3">Night</label>
+						<input type="range" class="custom-range UI_RANGE_CUSTOM_DAY_NIGHT STDN" min="0" max="1" step="0" value="0">
+					</span>
+					<script type="text/javascript">
+					$(".STDN").change(function(){
+						var valor = $(this).val();
+						if( valor == 0 ){
+							$(".UI_NIGHT_THEME").addClass("UI_DAY_THEME");
+							$(".UI_NIGHT_THEME").removeClass("UI_NIGHT_THEME");
+							$(".UI_NIGHT").addClass("UI_DAY");
+							$(".UI_NIGHT").removeClass("UI_NIGHT");
+						}else{
+							$(".UI_DAY_THEME").addClass("UI_NIGHT_THEME");
+							$(".UI_DAY_THEME").removeClass("UI_DAY_THEME");
+							$(".UI_DAY").addClass("UI_NIGHT");
+							$(".UI_DAY").removeClass("UI_DAY");
+						}
+					});
+					</script>
+				</div>
+			</nav>
+			<div id="tabs" class="tabs">
+				<div class="content">
+					{% block content %}
+					{% endblock %}
+				</div>
+			</div>
+			<p class="info"><b>JJRWebDev</b></p>
+		</div>
+	</body>
+</html>

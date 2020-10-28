@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<section id="section-1">
+	<h1>HOME</h1>
+	{% for receta in recetas %}
+	<a href="/viewrecipe/{{ receta.0 }}">
+		<div class="mediabox SelectableItem">
+			<div class="card UI_NIGHT_THEME">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-10">
+							<b>{{ receta.1 }}</b>
+						</div>
+						<div class="col text-right">
+							<span class="Kit">H</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	{% endfor %}
+</section>
+{% endblock %}

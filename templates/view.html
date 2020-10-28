@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+<section id="section-6">
+    <div class="mediabox">
+        <div class="card UI_CARD_CUSTOM UI_NIGHT_THEME">
+            <div class="card-header">
+                <b>{{ recetasel.0.1 }}</b>
+            </div>
+            <div class="card-body d-flex">
+                <span class="Kit UI_REC_ICON">H</span>
+                <span class="Kit UI_REC_ICON">G</span>
+            </div>
+            <p><span class="Kit">__</span></p>
+            <div class="card-body">
+                <b class="card-title">Description</b>
+            </div>
+            <div class="card-body">
+                {{ recetasel.0.3 }}
+            </div>
+        </div>
+    </div>
+    <div class="mediabox">
+        <div class="card UI_CARD_CUSTOM UI_NIGHT_THEME">
+            <div class="card-header">
+                <b>Ingredients</b>
+            </div>
+            {% for ingrediente in ingredientesel %}
+            <div class='input-group mb-3 INGN"+INGN+"'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text {{ ingrediente.3 }} UI_ING_LIST_VIEW'><b>{{ ingrediente.2 }}</b></span>
+                </div>
+                    <input type='text' class='form-control UI_NIGHT_THEME UI_ING_DATA_VIEW' DISABLED value='{{ ingrediente.1 }}' style='width: 30%;'>
+                    <input type='text' class='form-control UI_NIGHT_THEME UI_ING_DATA_VIEW' DISABLED value='x{{ ingrediente.4 }}' style='width: 12%;'>
+                    <input type='text' class='form-control UI_NIGHT_THEME UI_ING_DATA_VIEW text-right' DISABLED value='{{ ingrediente.5 }}gr' style='width: 12%;'>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="mediabox">
+        <div class="card UI_CARD_CUSTOM UI_NIGHT_THEME">
+            <div class="card-header">
+                <b>Steps</b>
+            </div>
+            <div class="card UI_CARD_CUSTOM UI_NIGHT_THEME">
+                <ul class="list-group list-group-flush">
+                {% for paso in pasos %}
+                    <li class="list-group-item UI_NIGHT_THEME UI_LISTED_STEP">{{ paso.1 }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div> 
+</section>
+{% endblock %}

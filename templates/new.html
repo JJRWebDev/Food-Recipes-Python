@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+{% block content %}
+<section id="section-3">
+	<h5>New Recipe</h5>
+	<div class="mediabox">
+	<form action="/lab" method="POST">
+		<div class="card UI_CARD_CUSTOM UI_NIGHT_THEME">
+			<!--<span class="Kit UI_TEST_1">M</span>-->
+			<div class="card-header">
+				<b>Name & Steps</b>
+			</div>
+			<div class="card-body">
+				<input type="text" class="form-control UI_NIGHT_THEME" spellcheck="false" name="RECIPENAME" autocomplete="off" autocorrect="off" autocapitalize="off" REQUIRED placeholder="Recipe Name Here ...">
+			</div>
+			<div class="card-body">
+				<div class="input-group mb-3">
+					<input type="text" class="form-control UI_NIGHT_THEME" id="StepTyped" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Type the steps needed Here ... ">
+					<div class="input-group-append">
+					  <button class="btn btn-secondary STPADD" type="button" id="button-addon2">+</button>
+					</div>
+				</div>
+				<span class="TableForSteps"></span>
+			</div>
+			<span class="DATASTEP"></span>	
+			<span class="INGDATA"></span>
+		</div>		
+		<script type="text/javascript">
+			var StepCount = 0;	
+			$(".STPADD").click(function(){
+				var StepInfo = $("#StepTyped").val();
+				StepCount++;
+				if( StepInfo != "" ){
+				var Step = "<div class=\"input-group mb-3 StepCount"+StepCount+"\" ><input type=\"text\" name=\"recipestep\" class=\"form-control UI_NIGHT_THEME\" spellcheck=\"false\" autocomplete=\"off\" autocorrect=\"off\" autocapitalize=\"off\" DISABLED value=\""+StepInfo+"\" /><div class=\"input-group-append\"><button StepN=\"StepCount"+StepCount+"\" class=\"btn btn-secondary STPDEL\" type=\"button\" StepCount=\"StepCount"+StepCount+"\" >&nbsp;-</button></div></div>";
+					$(".TableForSteps").append(Step);
+				var DataStep = "<input type='hidden' name='Step"+StepCount+"' class='StepCount"+StepCount+"' value='"+StepInfo+"'>";
+					$(".DATASTEP").append(DataStep);
+					$(".STPDEL").click(function(){
+						var step = $(this).attr('StepN');
+						$("."+step).remove();
+					});
+				}
+				$("#StepTyped").val('');
+			});
+		</script>
+	</div>
+	<div class="mediabox">
+		<div class="card UI_CARD_CUSTOM UI_NIGHT_THEME">
+			<div class="card-header">
+				<b>Hints & Tips</b>
+			</div>
+			<div class="card-body">
+				<textarea class="RecipeInputDetail UI_NIGHT_THEME form-control" maxlength="280" name="RECIPEDESC" spellcheck="false" placeholder="Describe the recipe best as you can here ..."></textarea>
+			</div>
+		</div>
+	</div>
+	<div class="mediabox">
+		<div class="card UI_CARD_CUSTOM UI_NIGHT_THEME">
+			<div class="card-header">
+				<b>Ingredients</b>
+			</div>
+			<div class="card-body">
+				<select id="selecting" class="form-group IngredientSelect UI_NIGHT_THEME">
+					{% for ingrediente in ingredientes %}
+						<option value="{{ ingrediente.0 }}" catego="{{ ingrediente.3 }}" symbol="{{ ingrediente.2 }}" nombre="{{ ingrediente.1 }}">{{ ingrediente.1 }}</option>
+					{% endfor %}
+				</select>
+				<script src="{{ url_for('static', filename='js/tail.select.js') }}" ></script>
+				<script type="text/javascript"> tail.select('#selecting',{ search: true }); </script>
+			</div>
+			<div class="card-body">
+				<label for="customRange3">Quantity</label><span style="float:right;" class="civalue badge badge-light UI_NIGHT_THEME">1</span>
+				<input type="range" class="custom-range UI_RANGE_CUSTOM" min="1" max="20" step="1" value="1" id="civalue">
+			</div>
+			<div class="card-body">
+				<label for="customRange3">Weight</label><span style="float:right;" class="pivalue badge badge-light UI_NIGHT_THEME">1</span>
+				<input type="range" class="custom-range UI_RANGE_CUSTOM" min="1" max="20" step="1" value="1" id="pivalue">	
+			</div>
+			<div class="card-body">
+				<div class="input-group mb-3">
+					<input type="text" DISABLED class="form-control UI_NIGHT_THEME" placeholder="Click to add this selection">
+					<div class="input-group-append">
+						<button type="button" class="btn btn-secondary INGADD UI_BT_CUSTOM">+</button>
+					</div>
+				</div>
+				<span class="IngredientAdd"></span>
+			</div>
+			
+		</div>
+		
+		<script type="text/javascript">
+			$("#civalue").change(function(){
+				var valor = $("#civalue").val();
+				$('.civalue').html(valor);
+			});
+			$("#pivalue").change(function(){
+				var valor = $("#pivalue").val();
+				$('.pivalue').html(valor);
+			});
+			var INGN = 0;
+			$(".INGADD").click(function(){
+				var id_ing = $(".IngredientSelect").val();
+				var symbol = $('option:selected').attr('symbol');
+				var catego = $('option:selected').attr('catego');
+				var nombre = $('option:selected').attr('nombre');
+				var quanti = $("#civalue").val();
+				var weight = $("#pivalue").val();
+				INGN++;
+				var classinput = "form-control UI_NIGHT_THEME UI_ING_DATA";
+				$(".IngredientAdd").append("<div class='input-group mb-3 INGN"+INGN+"'><div class='input-group-prepend'><span class='input-group-text "+catego+" UI_ING_LIST'><b>"+symbol+"</b></span></div><input type='text' class='"+classinput+"' DISABLED value='"+nombre+"' style='width: 30%;'><input type='text' class='"+classinput+"' DISABLED value='x"+quanti+"' style='width: 12%;'><input type='text' class='"+classinput+"' DISABLED value='"+weight+"gr' style='width: 12%;'><div class='input-group-append'><span class='input-group-text UI_ING_LIST INGDEL' INGN='"+INGN+"' >-</span></div></div>");
+				//$(".IngredientAdd").append("<div class=\"form-row UI_LISTED_INGREDIENT INGN"+INGN+" UI_NIGHT_THEME\"><div class=\"col\"><b class='"+catego+"' style=\"font-size:30px;\">"+symbol+"</b></div><div class=\"col\">"+nombre+"</div><div class=\"col\">x"+quanti+"</div><div class=\"col\">"+weight+" gr</div><div class=\"col text-right\"><button type=\"button\" INGN=\""+INGN+"\" class=\"btn btn-secondary INGDEL\">-</button></div></div>");
+				var INGDATA = "<input type='hidden' name='Ingre"+INGN+"' class='INGN"+INGN+"' value='"+id_ing+"_"+quanti+"_"+weight+"' />";
+				$(".INGDATA").append(INGDATA);
+				$(".INGDEL").click(function(){
+					var x = $(this).attr('INGN');
+					$(".INGN"+x).remove();
+				});
+			});
+		</script>
+		<input type="submit" class="form-control UI_NIGHT_THEME" value="Send & Save"/>
+	</form>
+	</div>
+</section>
+{% endblock %}
